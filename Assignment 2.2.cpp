@@ -9,26 +9,22 @@ private:
     float marks;
 
 public:
-    // Function to initialize the student with default values
     void initStudent() {
         rollNo = 0;
         name = "";
         marks = 0.0;
     }
 
-    // Function to print the student details to the console
     void printStudentOnConsole() {
         cout << "\nStudent Details:\n";
         cout << "Roll No: " << rollNo << endl;
         cout << "Name: " << name << endl;
         cout << "Marks: " << marks << endl;
     }
-
-    // Function to accept student details from the console
     void acceptStudentFromConsole() {
         cout << "\nEnter Roll No: ";
         cin >> rollNo;
-        cin.ignore(); // to consume the newline left by cin
+        cin.ignore(); 
         
         cout << "Enter Name: ";
         getline(cin, name);
@@ -43,7 +39,7 @@ int main() {
     int choice;
 
     do {
-        // Display the menu
+      
         cout << "\nMenu:\n";
         cout << "1. Initialize Student\n";
         cout << "2. Enter Student Details\n";
