@@ -10,25 +10,21 @@ namespace NStudent {
         float marks;
 
     public:
-        // Constructor to initialize with default values
         void initStudent() {
             rollNo = 0;
             name = "";
             marks = 0.0;
         }
-
-        // Function to accept student details from the console
         void acceptStudentFromConsole() {
             cout << "Enter Roll No: ";
             cin >> rollNo;
-            cin.ignore();  // To consume the newline character after rollNo input
+            cin.ignore();  
             cout << "Enter Name: ";
             getline(cin, name);
             cout << "Enter Marks: ";
             cin >> marks;
         }
 
-        // Function to print student details on the console
         void printStudentOnConsole() const {
             cout << "Roll No: " << rollNo << endl;
             cout << "Name: " << name << endl;
@@ -38,13 +34,10 @@ namespace NStudent {
 }
 
 int main() {
-    // Create an object of Student inside the NStudent namespace
     NStudent::Student student;
 
-    // Perform student details acceptance
     student.acceptStudentFromConsole();
 
-    // Display student details
     cout << "\nStudent Details:\n";
     student.printStudentOnConsole();
 
