@@ -1,45 +1,95 @@
 #include <iostream>
+#include <string>
+
 using namespace std;
-int main(){
-    int **ptr = new int *[2];
-    ptr[0] = new int[3];
-    ptr[1] = new int[3];
-    ptr[0][0] = 10;
-    ptr[0][1] = 20;
-    ptr[0][2] = 30;
-    ptr[1][0] = 40;
-    ptr[1][2] = 50;
-    ptr[1][2] = 60;
 
-    for(int row = 0; row<2; row++)
-    {
-    for(int col = 0; col<3; col++)
-    {
-        cout << ptr[row][col] << " ";
+class Product {
+public:
+    string id;
+    string title;
+    double price;
+
+    Product(string i, string t, double p) : id(i), title(t), price(p) {}
+
+    virtual double calculatePrice() = 0;
+
+    virtual void display() const = 0;
+
+    virtual ~Product() {}
+};
+
+class Book : public Product {
+public:
+    string author;
+
+    Book(string i, string t, string a, double p) : Product(i, t, p), author(a) {}
+
+    double calculatePrice() override {
+        return price * 0.90;
     }
-    cout <<endl;
+
+    void display() const override {
+        cout << "Book - ID: " << id << ", Title: " << title << ", Author: " << author << ", Price: $" << price << endl;
     }
-    delete[] ptr[0];
-    ptr[0] = NULL;
-    delete[] ptr[1];
-    ptr[1] = NULL;
-}
+};
 
-int main2()
-{
-    int *arr[2][3];
-    arr[0][0] = new int(10);
-    return 0;
-}
-int main1()
-{
-    for (int row = 0; row<2; row++)
-    {
-        for(int col =0; col<3; col++){
-            cout << arr[row][col] << " ";
+class Tape : public Product {
+public:
+    string artist;
 
+    Tape(string i, string t, string ar, double p) : Product(i, t, p), artist(ar) {}
+
+    double calculatePrice() override {
+        return price * 0.95;
+    }
+
+    void display() const override {
+        cout << "Tape - ID: " << id << ", Title: " << title << ", Artist: " << artist << ", Price: $" << price << endl;
+    }
+};
+
+int main() {
+    Product* arr[3];
+
+    int choice;
+    for (int i = 0; i < 3; i++) {
+        cout << "Enter 1 to add Book or 2 to add Tape: ";
+        cin >> choice;
+
+        if (choice == 1) {
+            string id, title, author;
+            double price;
+            cout << "Enter Book ID: "; cin >> id;
+            cout << "Enter Book Title: "; cin >> title;
+            cout << "Enter Book Author: "; cin >> author;
+            cout << "Enter Book Price: "; cin >> price;
+            arr[i] = new Book(id, title, author, price);
+        } else if (choice == 2) {
+            string id, title, artist;
+            double price;
+            cout << "Enter Tape ID: "; cin >> id;
+            cout << "Enter Tape Title: "; cin >> title;
+            cout << "Enter Tape Artist: "; cin >> artist;
+            cout << "Enter Tape Price: "; cin >> price;
+            arr[i] = new Tape(id, title, artist, price);
+        } else {
+            cout << "Invalid choice!" << endl;
+            i--;
         }
-        cout << endl;
     }
+
+    double total = 0;
+    cout << "\nPurchased Products: \n";
+    for (int i = 0; i < 3; i++) {
+        arr[i]->display();
+        total += arr[i]->calculatePrice();
+    }
+
+    cout << "\nFinal Bill after discounts: $" << total << endl;
+
+    for (int i = 0; i < 3; i++) {
+        delete arr[i];
+    }
+
     return 0;
 }
